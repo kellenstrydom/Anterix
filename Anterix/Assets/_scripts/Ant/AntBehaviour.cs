@@ -6,8 +6,10 @@ public class AntBehaviour : MonoBehaviour
     public enum State
     {
         Moving = 0,
-        Attaking = 1,
+        Waiting = 1,
+        Attaking = 2,
     }
+
     
     [Header("Components")]
     Movement _movement;
@@ -17,6 +19,15 @@ public class AntBehaviour : MonoBehaviour
     [Header("Stats")]
     public AntStats antStats;
     public State currentState = State.Moving;
+    
+    [Header("Flags")]
+    public bool gotPotion = false;
+
+    [Header("Other")] 
+    public float lineSpace;
+    
+    [Header("References")]
+    PotionManager _potionManager;
 
     private void Awake()
     {
@@ -25,6 +36,9 @@ public class AntBehaviour : MonoBehaviour
         _attack = GetComponent<Attack>();
         
         SetStats();
+        
+        _potionManager = GameObject.Find("Potion Manager").GetComponent<PotionManager>();
+
     }
 
     void SetStats()
@@ -44,6 +58,17 @@ public class AntBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (!gotPotion)
+        {
+            if (_potionManager.potion.position.x < transform.position.x)
+            {
+                ChangeState(State.Waiting);
+            }
+            else
+            {
+                CheckLine();
+            }
+        }
         CheckCanAttack();
     }
 
@@ -60,14 +85,33 @@ public class AntBehaviour : MonoBehaviour
         }
     }
 
+    void CheckLine()
+    {
+        Vector2 direction = Vector2.right;
+        LayerMask targetLayer = LayerMask.GetMask("Ant");
+        
+        Vector2 center = (Vector2)transform.position + direction * (lineSpace);
+        float angle = 0f;
+
+        Collider2D hit = Physics2D.Raycast(center + Vector2.up*1, Vector2.down, 2, targetLayer).collider;
+            
+        if (hit) Debug.Log(hit);
+        if (hit) ;
+
+        ChangeState(hit ? State.Waiting : State.Moving);
+    }
+
     void ChangeState(State state)
     {
+        if (currentState == state) return;
+        
         currentState = state;
         switch (currentState)
         {
             case State.Moving:
                 StartMove();
                 break;
+            case State.Waiting:
             case State.Attaking:
                 StopMove();
                 break;
@@ -82,5 +126,16 @@ public class AntBehaviour : MonoBehaviour
     void StopMove()
     {
         _movement.enabled = false;
+    }
+    
+    
+    // Optional: visualize the box in the editor
+    void OnDrawGizmosSelected()
+    {
+        Vector2 direction = Vector2.right;
+        Vector2 center = (Vector2)transform.position + direction * (lineSpace);
+        
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(center, new Vector3(lineSpace/2, 2, 0));
     }
 }

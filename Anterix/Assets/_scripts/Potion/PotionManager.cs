@@ -1,11 +1,19 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PotionManager : MonoBehaviour
 {
     public List<IngredientInfo.IngredientType> ingredients;
+    public Transform potion;
 
-    public void PlaceIngredients(IngredientInfo.IngredientType ingredient)
+    private void Awake()
+    {
+        potion = transform;
+    }
+
+
+    public void AddIngredients(IngredientInfo.IngredientType ingredient)
     {
         ingredients.Add(ingredient);
     }

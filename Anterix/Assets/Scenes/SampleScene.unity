@@ -917,13 +917,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1850556981}
   - component: {fileID: 1850556980}
+  - component: {fileID: 1850556984}
   - component: {fileID: 1850556986}
   - component: {fileID: 1850556985}
-  - component: {fileID: 1850556984}
   - component: {fileID: 1850556983}
   - component: {fileID: 1850556982}
   m_Layer: 8
-  m_Name: Capsule
+  m_Name: Potion Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850556979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4218d78ef2d54d0898b7514e121a781f, type: 3}
   m_Name: 
@@ -1062,6 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredients: 000000000000000000000000
+  potion: {fileID: 0}
 --- !u!114 &1850556985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,8 +1154,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7389715219430992543, guid: 3bc45b28de2c6654a8819d7a2ca805f7, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
