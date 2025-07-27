@@ -1341,9 +1341,4 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHorizontal(InputAction.CallbackContext context);
     }
-
-    public object FindActionMap(string actionMapName)
-    {
-        throw new NotImplementedException();
-    }
 }

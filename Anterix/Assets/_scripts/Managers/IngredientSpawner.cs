@@ -4,6 +4,9 @@ using Random = UnityEngine.Random;
 
 public class IngredientSpawner : MonoBehaviour
 {
+    
+    [Header("Ingredient Table")]
+    public IngredientInfo[] ingredientTable;
 
     [Header("Spawn Area (relative to this object)")]
     public Vector2 areaSize = new Vector2(5f, 3f);
@@ -37,7 +40,11 @@ public class IngredientSpawner : MonoBehaviour
         if (ingredientPrefab == null) return;
         
         Vector2 spawnPos = GetRandomPointInRectangle();
-        Instantiate(ingredientPrefab, spawnPos, Quaternion.identity);
+        Collection collection = Instantiate(ingredientPrefab, spawnPos, Quaternion.identity).GetComponent<Collection>();
+        
+        if (collection == null) return;
+        
+        collection.ingredientInfo =  ingredientTable[Random.Range(0, ingredientTable.Length)];
     }
 
     private Vector2 GetRandomPointInRectangle()
@@ -62,6 +69,10 @@ public class IngredientSpawner : MonoBehaviour
             if (hit == null)
             {
                 isValid = true; // Nothing nearby, it's safe to spawn here
+            }
+            else
+            {
+                isValid = true;
             }
         }
 
